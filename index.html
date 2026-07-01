@@ -3,137 +3,113 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="CryoACE paper project page: atom-centric automated model building for cryo-EM density maps.">
+    <meta name="description" content="CryoACE project page: automated atomic model building from cryo-EM density maps.">
     <title>CryoACE</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <header class="site-header">
-      <nav class="nav" aria-label="Primary navigation">
-        <a class="brand" href="#">CryoACE</a>
-        <div class="nav-links">
-          <a href="#abstract">Abstract</a>
-          <a href="#method">Method</a>
-          <a href="#results">Results</a>
-          <a href="#citation">Citation</a>
-        </div>
-      </nav>
-
-      <section class="hero">
-        <p class="venue">ICML 2026</p>
-        <h1>CryoACE: An Atom-centric Framework for Accurate and Automated Model Building in Cryo-EM</h1>
-        <p class="authors">
-          Minzhang Li, Mingrui Li, Weichen Qin, Qihe Chen, Sixian Shen, Yuan Pei, Jiakai Zhang, Jingyi Yu
-        </p>
-        <p class="affiliations">
-          ShanghaiTech University · Cellverse Co., Ltd.
-        </p>
-        <div class="actions" aria-label="Paper links">
-          <a class="button primary" href="assets/paper.pdf">Paper</a>
-          <a class="button" href="#" aria-disabled="true">arXiv soon</a>
-          <a class="button" href="#" aria-disabled="true">Code soon</a>
-          <a class="button" href="#" aria-disabled="true">Data soon</a>
-        </div>
-      </section>
-    </header>
-
     <main>
-      <section class="figure-band teaser-band" aria-label="CryoACE overview">
-        <div class="wide">
-          <img src="assets/teaser.webp" alt="CryoACE overview and benchmark results." loading="eager">
+      <section class="hero">
+        <h1>CryoACE: An Atom-centric Framework for Accurate and Automated Model Building in Cryo-EM</h1>
+        <p class="venue">ICML 2026</p>
+
+        <p class="authors">
+          <span>Minzhang Li<sup>1,2</sup></span>,
+          <span>Mingrui Li<sup>1</sup></span>,
+          <span>Weichen Qin<sup>1</sup></span>,
+          <span>Qihe Chen<sup>1,2</sup></span>,
+          <span>Sixian Shen<sup>1</sup></span>,
+          <span>Yuan Pei<sup>1</sup></span>,
+          <a href="https://jiakai-zhang.github.io/">Jiakai Zhang<sup>1,2</sup></a>, and
+          <a href="https://www.yu-jingyi.com/">Jingyi Yu<sup>1</sup></a>
+        </p>
+
+        <p class="affiliations">
+          <sup>1</sup>ShanghaiTech University &nbsp;&nbsp;
+          <sup>2</sup>Cellverse Co., Ltd.
+        </p>
+
+        <div class="links" aria-label="Paper links">
+          <a href="assets/paper.pdf">Paper</a>
+          <span>arXiv coming soon</span>
+          <span>Code coming soon</span>
+          <span>Data coming soon</span>
         </div>
+
+        <p class="tldr">
+          <strong>TL;DR:</strong> CryoACE builds precise atomic models directly from cryo-EM density
+          maps by sampling density features at atom coordinates and using local-resolution-guided
+          inference to recover both static structures and heterogeneous conformational ensembles.
+        </p>
       </section>
 
-      <section id="abstract" class="content-section">
-        <div class="section-heading">
-          <p class="eyebrow">Overview</p>
-          <h2>Atom-centric reconstruction for static and dynamic cryo-EM structures.</h2>
-        </div>
-        <div class="abstract">
-          <p>
-            Protein automodeling from cryo-EM density maps faces unique challenges in enforcing
-            physicochemical validity and managing conformational heterogeneity. CryoACE reconstructs
-            precise atomic graphs for both homogeneous and heterogeneous structures with an
-            atom-centric reconstruction paradigm, where density features are sampled directly at
-            atomic coordinates and recycled iteratively to refine structures.
-          </p>
-          <p>
-            CryoACE replaces expensive voxel convolutions with efficient multimodal fusion and uses
-            training-free guidance driven by predicted local resolution priors to resolve dynamic
-            ambiguity. On a newly constructed high-quality dataset, CryoACE outperforms existing
-            static baselines and reveals atomic-level dynamic conformations on real-world datasets
-            including EMPIAR-10345 without relying on pre-built static structures.
-          </p>
-        </div>
+      <section class="media-section">
+        <img src="assets/teaser.webp" alt="Overview of CryoACE for automated model building from cryo-EM maps.">
       </section>
 
-      <section class="stats">
-        <div>
-          <strong>10,915</strong>
-          <span>curated density-structure-sequence triplets</span>
-        </div>
-        <div>
-          <strong>Static + dynamic</strong>
-          <span>homogeneous and heterogeneous model building</span>
-        </div>
-        <div>
-          <strong>Atom-level</strong>
-          <span>coordinate generation directly conditioned on density maps</span>
-        </div>
+      <section class="content-section" id="abstract">
+        <h2>Abstract</h2>
+        <p>
+          Protein automodeling from cryo-EM density maps faces unique challenges in enforcing
+          physicochemical validity and managing conformational heterogeneity. Current solvers are
+          often limited to static predictions or require computationally intensive heuristic
+          searches. We present CryoACE, an end-to-end framework that reconstructs precise atomic
+          graphs for both homogeneous and heterogeneous structures.
+        </p>
+        <p>
+          Our method features two key innovations: an atom-centric reconstruction paradigm, where
+          density features are sampled directly at atomic coordinates and iteratively recycled to
+          refine structures, replacing expensive voxel convolutions for efficient multimodal fusion;
+          and a training-free guidance mechanism that leverages predicted local resolution priors to
+          resolve dynamic ambiguity. Validated on a newly constructed high-quality dataset, CryoACE
+          significantly outperforms existing baselines on static benchmarks and unveils atomic-level
+          dynamic conformations on complex real-world datasets such as EMPIAR-10345.
+        </p>
       </section>
 
-      <section id="method" class="content-section">
-        <div class="section-heading">
-          <p class="eyebrow">Method</p>
-          <h2>Density features are sampled at predicted atoms, then recycled for refinement.</h2>
-        </div>
-        <figure class="paper-figure">
-          <img src="assets/method.webp" alt="CryoACE atom-centric model building pipeline." loading="lazy">
-          <figcaption>
-            CryoACE combines sequence priors, atom-centric density sampling, iterative recycling,
-            auxiliary quality prediction, and training-free guidance for controllable model building.
-          </figcaption>
-        </figure>
+      <section class="content-section" id="pipeline">
+        <h2>Pipeline</h2>
+        <img src="assets/method.webp" alt="CryoACE atom-centric reconstruction pipeline.">
+        <p>
+          CryoACE formulates model building as atom-centric coordinate generation. Density features
+          are queried at predicted atom locations, fused with sequence and structure representations,
+          and recycled to progressively refine the atomic graph. Auxiliary Q-score and local
+          resolution predictions provide model-quality estimates and guide heterogeneous inference.
+        </p>
       </section>
 
-      <section id="results" class="content-section">
-        <div class="section-heading">
-          <p class="eyebrow">Results</p>
-          <h2>Improved static reconstruction and heterogeneous ensemble recovery.</h2>
-        </div>
-        <div class="result-grid">
-          <figure class="paper-figure">
-            <img src="assets/homogeneous.webp" alt="Quantitative comparison for homogeneous model building." loading="lazy">
-            <figcaption>
-              Homogeneous model building benchmark across geometric accuracy, completeness, and map-model fit.
-            </figcaption>
-          </figure>
-          <figure class="paper-figure">
-            <img src="assets/heterogeneous.webp" alt="Heterogeneous model building results on alpha V beta 8 Integrin." loading="lazy">
-            <figcaption>
-              Heterogeneous modeling on alpha V beta 8 Integrin, showing atomic-level dynamic conformations.
-            </figcaption>
-          </figure>
-        </div>
+      <section class="content-section" id="results">
+        <h2>Homogeneous Model Building</h2>
+        <img src="assets/homogeneous.webp" alt="Homogeneous model building benchmark for CryoACE.">
+        <p>
+          On static cryo-EM benchmarks, CryoACE improves geometric accuracy, completeness, and
+          density agreement compared with existing automated model-building baselines, particularly
+          in noisy or low-resolution maps.
+        </p>
+
+        <h2>Heterogeneous Model Building</h2>
+        <img src="assets/heterogeneous.webp" alt="Heterogeneous model building results on alpha V beta 8 Integrin.">
+        <p>
+          For heterogeneous reconstructions, CryoACE uses predicted local resolution priors to
+          control density guidance and recover atomic-level conformational dynamics without relying
+          on pre-built static structures.
+        </p>
       </section>
 
-      <section id="citation" class="content-section citation-section">
-        <div class="section-heading">
-          <p class="eyebrow">Citation</p>
-          <h2>BibTeX</h2>
-        </div>
+      <section class="content-section" id="citation">
+        <h2>BibTeX</h2>
         <pre><code>@inproceedings{li2026cryoace,
-  title = {CryoACE: An Atom-centric Framework for Accurate and Automated Model Building in Cryo-EM},
-  author = {Li, Minzhang and Li, Mingrui and Qin, Weichen and Chen, Qihe and Shen, Sixian and Pei, Yuan and Zhang, Jiakai and Yu, Jingyi},
+  title     = {CryoACE: An Atom-centric Framework for Accurate and Automated Model Building in Cryo-EM},
+  author    = {Li, Minzhang and Li, Mingrui and Qin, Weichen and Chen, Qihe and Shen, Sixian and Pei, Yuan and Zhang, Jiakai and Yu, Jingyi},
   booktitle = {Proceedings of the International Conference on Machine Learning},
-  year = {2026}
+  year      = {2026}
 }</code></pre>
       </section>
     </main>
 
     <footer>
-      <span>CryoACE</span>
-      <span>Accurate and automated model building in cryo-EM</span>
+      This page follows the style of academic project pages such as CryoFASTar and the Academic
+      Project Page template.
     </footer>
   </body>
 </html>
