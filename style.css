@@ -84,6 +84,7 @@ h1 {
 .links span {
   display: inline-flex;
   align-items: center;
+  gap: 7px;
   min-height: 34px;
   padding: 6px 14px;
   border-radius: 999px;
@@ -91,6 +92,17 @@ h1 {
   color: #fff;
   font-size: 0.94rem;
   line-height: 1;
+}
+
+.links svg {
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: 0 0 auto;
 }
 
 .links span {
